@@ -11,6 +11,6 @@ require 'borris_bikes'
      it 'returns bike' do
        bike = Bike.new
        subject.dock(bike)
-       expect(bike).to eq bike
+       expect(subject.bike).to eq bike
      end
 end
