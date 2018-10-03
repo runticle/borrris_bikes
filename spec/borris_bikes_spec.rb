@@ -23,6 +23,7 @@ require 'borris_bikes'
       expect(subject.dock(bike)).to eq "Bike docked"
     end
     it 'raises an error if there is more than one bike docked' do
+      bike = Bike.new
       subject.dock(bike)
       expect { subject.dock(bike) }.to raise_error "Station full"
     end
