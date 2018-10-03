@@ -9,15 +9,15 @@ class DockingStation
     if @station.empty?
       raise "Oops, there are no bikes here"
     else
-      @bike
+      bike
     end
   end
   def dock(bike)
     if @station.empty?
+      @station.push(bike)
+      "Bike docked"
+    else
       raise "Station full"
     end
-    @bike = bike
-    @station.push(@bike)
   end
-
 end
