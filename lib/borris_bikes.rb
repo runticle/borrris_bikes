@@ -13,10 +13,11 @@ class DockingStation
     end
   end
   def dock(bike)
+    if @station.empty?
+      raise "Station full"
+    end
     @bike = bike
     @station.push(@bike)
   end
-  # def bike_available?
-  #
-  # end
+
 end
