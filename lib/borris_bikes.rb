@@ -14,8 +14,9 @@ class DockingStation
     @station[0]
   end
 
-  def dock(bike)
+  def dock(bike, working = true)
     raise "Station full" if full?
+    bike.report_broken_bike if working = false
     @station.push(bike)
     "Bike docked"
   end
