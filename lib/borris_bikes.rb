@@ -10,20 +10,14 @@ class DockingStation
   end
 
   def release_bike
-    if empty?
-      raise "Oops, there are no bikes here"
-    else
-      @station[0]
-    end
+    raise "Oops, there are no bikes here" if empty?
+    @station[0]
   end
 
   def dock(bike)
-    if full?
-     raise "Station full"
-    else
-      @station.push(bike)
-     "Bike docked"
-    end
+    raise "Station full" if full?
+    @station.push(bike)
+    "Bike docked"
   end
 
   private
