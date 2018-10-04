@@ -14,7 +14,7 @@ require 'borris_bikes'
  end
 
    it { is_expected.to respond_to(:dock).with(1).argument }
-   it { is_expected.to respond_to(:bike) }
+   it { is_expected.to respond_to(:station) }
 
 
   describe '#dock' do
@@ -27,4 +27,12 @@ require 'borris_bikes'
       expect { subject.dock(Bike.new) }.to raise_error "Station full"
     end
   end
+
+  describe '#initialize' do
+    it 'sets the capacity to 10' do
+      aldgate = DockingStation.new(10)
+      expect(aldgate.capacity).to eq 10
+    end
+  end
+
 end
