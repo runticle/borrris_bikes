@@ -13,10 +13,12 @@ class DockingStation
     end
   end
   def dock(bike)
-    if @station.empty?
+    @station.count
+    if @station.count <= 19
        @station.push(bike)
       "Bike docked"
     else
+       @station
       raise "Station full"
     end
   end
