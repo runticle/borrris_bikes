@@ -12,6 +12,15 @@ require 'Bikes.rb'
      it 'raises error if no bikes are available' do
        expect { subject.release_bike }.to raise_error "Oops, there are no bikes here"
      end
+     it "it doesn't release a broken bike" do
+       good_bike = Bike.new
+       bad_bike = Bike.new
+       bad_bike.report_broken_bike
+       subject.dock(bad_bike)
+       subject.dock(good_bike)
+       test_bike = subject.release_bike
+       expect(test_bike.working?).to eq true
+     end
  end
 
    it { is_expected.to respond_to(:dock).with(1).argument }
@@ -26,6 +35,12 @@ require 'Bikes.rb'
     it 'raises an error if there is more than one bike docked' do
       20.times {subject.dock Bike.new}
       expect { subject.dock(Bike.new) }.to raise_error "Station full"
+    end
+    it 'docks a broken bike' do
+      bike = Bike.new
+      bike.report_broken_bike
+      subject.dock(bike)
+      expect(subject.station.length).to eq 1
     end
   end
 

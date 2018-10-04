@@ -11,12 +11,17 @@ class DockingStation
 
   def release_bike
     raise "Oops, there are no bikes here" if empty?
-    @station[0]
+    @station.each do |bike|
+      if bike.working?
+        return bike
+        break
+      end
+    end
   end
 
   def dock(bike, working = true)
     raise "Station full" if full?
-    bike.report_broken_bike if working = false
+    bike.report_broken_bike if working == false
     @station.push(bike)
     "Bike docked"
   end
