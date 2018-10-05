@@ -4,10 +4,16 @@ class Van
   end
 
   def collect_from(location, working)
-    broken_bike = location.bikes.find { |bike| bike.working? == working }
-    @bikes << broken_bike
-    location.bikes.delete(broken_bike)
+    chosen_bike = location.bikes.find { |bike| bike.working? == working }
+    @bikes << chosen_bike
+    location.bikes.delete(chosen_bike)
   end
 
-  attr_reader :bikes
+  def deliver_to(location, working)
+    chosen_bike = @bikes.find { |bike| bike.working? == working }
+    location.bikes << chosen_bike
+    @bikes.delete(chosen_bike)
+  end
+
+  attr_accessor :bikes
 end
