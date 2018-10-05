@@ -2,11 +2,10 @@ require 'van'
 
 describe Van do
   let(:van) { Van.new }
-
   let(:working_bike) { double(:working_bike, working?: true) }
   let(:broken_bike) { double(:broken_bike, working?: false) }
-  let(:station) { double(:station) }
-  let(:garage) { double(:garage) }
+  let(:station) { double(:station, full?: false, class: "Station", empty?: false) }
+  let(:garage) { double(:garage, full?: false, class: "Garage", empty?: false) }
 
 
 
@@ -24,6 +23,16 @@ describe Van do
       van.collect_from(garage, true)
       expect(van.bikes).to include(working_bike)
       expect(garage.bikes).to eq [broken_bike]
+    end
+
+    it "raise an error when station is empty" do
+      allow(station).to receive(:empty?).and_return(true)
+      expect{van.collect_from(station, false)}.to raise_error "Station empty"
+    end
+
+    it "raises an error when garage is empty" do
+      allow(garage).to receive(:empty?).and_return(true)
+      expect{van.collect_from(garage, true)}.to raise_error "Garage empty"
     end
   end
 
@@ -43,6 +52,16 @@ describe Van do
       van.deliver_to(station, true)
       expect(station.bikes).to eq [working_bike]
       expect(van.bikes).to eq [broken_bike]
+    end
+
+    it "raises an error when the station is full" do
+      allow(station).to receive(:full?).and_return(true)
+      expect{van.deliver_to(station, true)}.to raise_error "Station full"
+    end
+
+    it "raises an error when the garage is full" do
+      allow(garage).to receive(:full?).and_return(true)
+      expect{van.deliver_to(garage, false)}.to raise_error "Garage full"
     end
 
   end
