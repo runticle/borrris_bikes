@@ -11,10 +11,10 @@ class Van
 
   def deliver_to(location, working)
     raise "#{location.class} full" if location.full?
-    raise "Van does not have the bikes you're looking for" if @bikes.select {|bike| bike.working? == working}.empty?
-    chosen_bike = @bikes.find { |bike| bike.working? == working }
-    location.bikes << chosen_bike
-    @bikes.delete(chosen_bike)
+    raise "Van does not have the bikes you're looking for" unless has_right_bikes?(self, working)
+
+    location.bikes << chosen_bike(self, working)
+    @bikes.delete chosen_bike(self, working)
   end
 
 
