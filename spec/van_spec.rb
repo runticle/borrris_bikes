@@ -27,11 +27,13 @@ describe Van do
 
     it "raise an error when station is empty" do
       allow(station).to receive(:empty?).and_return(true)
+      allow(station).to receive(:bikes).and_return([])
       expect{van.collect_from(station, false)}.to raise_error "Station empty"
     end
 
     it "raises an error when garage is empty" do
       allow(garage).to receive(:empty?).and_return(true)
+      allow(garage).to receive(:bikes).and_return([])
       expect{van.collect_from(garage, true)}.to raise_error "Garage empty"
     end
   end

@@ -4,7 +4,7 @@ class Van
   end
 
   def collect_from(location, working)
-    raise "#{location.class} empty" if location.empty?
+    raise "#{location.class} empty" if location.bikes.select(&:working?).empty?
     chosen_bike = location.bikes.find { |bike| bike.working? == working }
     @bikes << chosen_bike
     location.bikes.delete(chosen_bike)
