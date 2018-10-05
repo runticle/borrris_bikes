@@ -27,14 +27,14 @@ describe Van do
 
     it "raise an error when station is empty" do
       allow(station).to receive(:empty?).and_return(true)
-      allow(station).to receive(:bikes).and_return([])
-      expect{van.collect_from(station, false)}.to raise_error "Station empty"
+      allow(station).to receive(:bikes).and_return([working_bike])
+      expect{van.collect_from(station, false)}.to raise_error "Station does not have the bikes you're looking for"
     end
 
     it "raises an error when garage is empty" do
       allow(garage).to receive(:empty?).and_return(true)
-      allow(garage).to receive(:bikes).and_return([])
-      expect{van.collect_from(garage, true)}.to raise_error "Garage empty"
+      allow(garage).to receive(:bikes).and_return([broken_bike])
+      expect{van.collect_from(garage, true)}.to raise_error "Garage does not have the bikes you're looking for"
     end
   end
 
@@ -64,6 +64,11 @@ describe Van do
     it "raises an error when the garage is full" do
       allow(garage).to receive(:full?).and_return(true)
       expect{van.deliver_to(garage, false)}.to raise_error "Garage full"
+    end
+
+    it "raises an error when van does not have desired bikes" do
+      van.bikes = [broken_bike]
+      expect {van.deliver_to(station, true)}.to raise_error "Van does not have the bikes you're looking for"
     end
 
   end
